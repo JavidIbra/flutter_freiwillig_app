@@ -18,19 +18,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    int _currentIndex = 0;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.onTertiary,
         title: const Text("Könüllülər"),
+        elevation: 1.2,
       ),
-      body: const Text('data'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              child: Stack(),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-      // bottomNavigationBar: BottomNavigationBar(items: items),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        elevation: 1.9,
+        selectedItemColor: Theme.of(context).colorScheme.inversePrimary,
+        currentIndex: _currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(Icons.home_filled),
+          ),
+          BottomNavigationBarItem(
+            label: 'Star',
+            icon: Icon(Icons.star),
+          ),
+        ],
+      ),
     );
   }
 }

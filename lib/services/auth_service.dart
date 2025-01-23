@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_freiwillig_app/services/api_service.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -38,5 +39,21 @@ class AuthService {
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('jwt_token');
+  }
+
+  // JWT tokeni silme (logout için)
+  Future<void> removeToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+  }
+
+  // Token'in geçerli olup olmadığını kontrol etme
+  Future<bool> isTokenValid() async {
+    String? token = await getToken();
+    if (token == null) return false;
+
+    // Token süresini kontrol et
+    bool isExpired = Jwt.isExpired(token);
+    return !isExpired;
   }
 }

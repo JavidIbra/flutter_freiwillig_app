@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_freiwillig_app/screens/home_page_screen.dart';
 import 'package:flutter_freiwillig_app/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -11,6 +12,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
 
   var _enteredUserName = '';
   var _enteredPassword = '';
@@ -35,6 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
           await authService.loginUser(_enteredUserName, _enteredPassword);
 
       if (token.isNotEmpty) {
+        _authService.saveToken(token);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const MyHomePage(),
