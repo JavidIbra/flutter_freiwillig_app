@@ -7,24 +7,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   final ApiService _apiService = ApiService();
 
-  Future<String> loginUser(String email, String password) async {
-    var response = await _apiService.login(email, password);
-    if (response.statusCode == 200) {
-      var responseBody = jsonDecode(response.body);
+  // Future<String> loginUser(String email, String password) async {
+  //   var response = await _apiService.login(email, password);
+  //   if (response.statusCode == 200) {
+  //     var responseBody = jsonDecode(response.body);
 
-      String token = responseBody['data']['token'];
+  //     String token = responseBody['data']['token'];
 
-      await saveToken(token);
+  //     await saveToken(token);
 
-      return token;
+  //     return token;
 
-      // print(token);
-      // print(response.body);
-    } else {
-      print("Login failed with status code: ${response.statusCode}");
-      return '';
-    }
-  }
+  //     // print(token);
+  //     // print(response.body);
+  //   } else {
+  //     print("Login failed with status code: ${response.statusCode}");
+  //     return '';
+  //   }
+  // }
 
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
